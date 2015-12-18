@@ -1,18 +1,18 @@
-Q = "On the %s%s day of Christmas\nmy true love sent to me:\n%s"
-L = """12 Drummers Drumming         
-Eleven Pipers Piping         
-Ten Lords a Leaping          
-Nine Ladies Dancing          
-Eight Maids a Milking        
-Seven Swans a Swimming       
-Six Geese a Laying           
-Five Golden Rings            
-Four Calling Birds           
-Three French Hens            
-Two Turtle Doves             
+Q = "On the %s%s day of Christmas\nmy true love sent to me:\n"
+L = """12 Drummers Drumming          
+Eleven Pipers Piping          
+Ten Lords a Leaping           
+Nine Ladies Dancing           
+Eight Maids a Milking         
+Seven Swans a Swimming        
+Six Geese a Laying            
+Five Golden Rings             
+Four Calling Birds            
+Three French Hens             
+Two Turtle Doves              
 and a Partridge in a Pear Tree
 """
 
-print Q % (1, "st", "A " + L[336:])
+print Q % (1, "st") + "A " + L[347:]
 for x in range(2, 13):
-    print Q % (x, {2: "nd", 3: "rd"}.get(x, "th"), L[-x*31:])
+    print Q % (x, {2: "nd", 3: "rd"}.get(x, "th")) + L[-x*31:]
