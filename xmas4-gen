@@ -1,0 +1,17 @@
+#!/usr/bin/python
+from StringIO import StringIO
+
+buf = StringIO()
+
+def tobin(x):
+    for c in bin(x)[2:].zfill(8):
+        if c == "0":
+            buf.write(" ")
+        else:
+            buf.write("\t")
+
+with file("full-lyrics.txt") as f:
+    for c in f.read().encode("hex"):
+        tobin(ord(c))
+
+print buf.getvalue(),
