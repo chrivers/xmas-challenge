@@ -9,9 +9,10 @@ def tobin(x):
             buf.write(" ")
         else:
             buf.write("\t")
+    buf.write("\v")
 
 with file("full-lyrics.txt") as f:
-    for c in f.read().encode("hex"):
+    for c in f.read():
         tobin(ord(c))
 
 print buf.getvalue(),
