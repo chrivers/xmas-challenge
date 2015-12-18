@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import sys
-
-text = sys.stdin.read()
+filename = sys.argv[1]
+text = file(filename).read()
 text = text \
        .replace(" ", "") \
        .replace("\t", "") \
@@ -9,4 +9,4 @@ text = text \
        .replace("\r", "") \
        .replace("\f", "") \
        .replace("\v", "")
-print "Total: %d characters" % len(text)
+print "%s: %3d characters" % (filename, len(text))
