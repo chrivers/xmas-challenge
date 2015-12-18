@@ -1,0 +1,30 @@
+#!/usr/bin/python
+import sys
+from StringIO import StringIO
+
+buf = StringIO()
+
+def tobin(x):
+    # push number
+    buf.write("  ")
+    # positive sign
+    buf.write(" ")
+    for c in bin(x)[2:].zfill(8):
+        if c == "0":
+            # zero
+            buf.write(" ")
+        else:
+            # one
+            buf.write("\t")
+    # end parameter
+    buf.write("\n")
+    # print top of stack
+    buf.write("\t\n  ")
+
+with file("full-lyrics.txt") as f:
+    for c in f.read():
+        tobin(ord(c))
+
+buf.write("\n\n\n")
+
+sys.stdout.write(buf.getvalue())
