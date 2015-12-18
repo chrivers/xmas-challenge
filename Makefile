@@ -17,8 +17,8 @@ sizes:
 	@./size.py xmas5
 
 compare: run
-	@diff -B 1.out full-lyrics.txt
-	@diff -B 2.out full-lyrics.txt
-	@diff -B 3.out full-lyrics.txt
-	@diff -B 4.out full-lyrics.txt
-	@diff -B 5.out full-lyrics.txt
+	@diff -Bq 1.out full-lyrics.txt && echo "xmas1 matches"
+	@diff -Bq 2.out full-lyrics.txt && echo "xmas2 matches"
+	@diff -Bq 3.out full-lyrics.txt && echo "xmas3 matches"
+	@diff -Bq 4.out full-lyrics.txt && echo "xmas4 matches"
+	@diff -Bq 5.out full-lyrics.txt && echo "xmas5 matches"
