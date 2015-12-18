@@ -1,6 +1,6 @@
 Q = "On the %s%s day of Christmas\nmy true love sent to me:\n%s\n"
 L = [
-    "Twelve Drummers Drumming",
+    "12 Drummers Drumming",
     "Eleven Pipers Piping",
     "Ten Lords a Leaping",
     "Nine Ladies Dancing",
@@ -20,6 +20,6 @@ def J(*a):
     print Q % (x, N.get(x, "th"), "\n".join(a))
 
 x = 1
-J(L[-1][4:])
+J("A "+L[-1][6:])
 for x in range(2, 13):
     J(*L[12-x:])
