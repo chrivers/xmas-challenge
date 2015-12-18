@@ -1,4 +1,4 @@
-Q = "On the %s%s day of Christmas\nmy true love sent to me:\n%s\n"
+Q = "On the %s%s day of Christmas\nmy true love sent to me:\n%s"
 L = """12 Drummers Drumming         
 Eleven Pipers Piping         
 Ten Lords a Leaping          
@@ -10,7 +10,8 @@ Five Golden Rings
 Four Calling Birds           
 Three French Hens            
 Two Turtle Doves             
-and a Partridge in a Pear Tree"""
+and a Partridge in a Pear Tree
+"""
 
 N = {1: "st", 2: "nd", 3: "rd"}
 
@@ -20,4 +21,4 @@ def J(a):
 x = 1
 J("A " + L[336:])
 for x in range(2, 13):
-    J(L[360-x*30:])
+    J(L[-x*31:])
