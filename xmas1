@@ -1,5 +1,6 @@
-Q = "On the %s%s day of Christmas\nmy true love sent to me:\n"
-L = """12 Drummers Drumming       
+L = """On the %s%s day of Christmas
+my true love sent to me:
+12 Drummers Drumming       
 Eleven Pipers Piping       
 Ten Lords a Leaping        
 Nine Ladies Dancing        
@@ -14,4 +15,4 @@ Two Turtle Doves
 """
 
 for x in range(1, 13):
-    print Q % (x, {1: "st", 2: "nd", 3: "rd"}.get(x, "th")) + L[-x*28:] % ["A", "and a"][x > 1]
+    print L[:54] % (x, {1: "st", 2: "nd", 3: "rd"}.get(x, "th")) + L[-x*28:] % ["A", "and a"][x > 1]
