@@ -13,12 +13,8 @@ Two Turtle Doves
 and a Partridge in a Pear Tree
 """
 
-N = {1: "st", 2: "nd", 3: "rd"}
+N = {2: "nd", 3: "rd"}
 
-def J(a):
-    print Q % (x, N.get(x, "th"), a)
-
-x = 1
-J("A " + L[336:])
+print Q % (1, "st", "A " + L[336:])
 for x in range(2, 13):
-    J(L[-x*31:])
+    print Q % (x, N.get(x, "th"), L[-x*31:])
