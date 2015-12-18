@@ -13,8 +13,6 @@ Two Turtle Doves
 and a Partridge in a Pear Tree
 """
 
-N = {2: "nd", 3: "rd"}
-
 print Q % (1, "st", "A " + L[336:])
 for x in range(2, 13):
-    print Q % (x, N.get(x, "th"), L[-x*31:])
+    print Q % (x, {2: "nd", 3: "rd"}.get(x, "th"), L[-x*31:])
