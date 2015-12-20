@@ -5,7 +5,7 @@ clean:
 run:
 	@python xmas1 > 1.out
 	@python xmas2 > 2.out
-	@sh xmas3 > 3.out
+	@zsh xmas3 > 3.out
 	@python xmas4 > 4.out
 	@./whitespace.pl xmas5 > 5.out
 
