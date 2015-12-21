@@ -23,13 +23,53 @@ def print_top_of_stack():
     # print top of stack
     buf.write("\t\n  ")
 
+def pop():
+    buf.write(" \n\n")
+
+def addition():
+    buf.write("\t   ")
+
+def subtraction():
+    buf.write("\t  \t")
+
+def swap_top_of_stack():
+    buf.write(" \n\t")
+
+def duplicate_top_of_stack():
+    buf.write(" \n ")
+
+# flow control
+def label(x):
+    buf.write("\n  %s\n" % x)
+
+def jump(label):
+    buf.write("\n \n%s\n" % label)
+
+def jump_if_zero(label):
+    buf.write("\n\t %s\n" % label)
+
+def jump_if_negative(label):
+    buf.write("\n\t\t%s\n" % label)
+
 def end_program():
     buf.write("\n\n\n")
 
 with file("full-lyrics.txt") as f:
-    for c in f.read():
+    data = f.read()
+    for c in reversed(data):
         push_number(ord(c))
-        print_top_of_stack()
+    push_number(len(data))
+
+    label(" ")
+    swap_top_of_stack()
+    print_top_of_stack()
+    push_number(1)
+    subtraction()
+    duplicate_top_of_stack()
+
+    jump_if_zero("  ")
+    jump(" ")
+    label("  ")
     end_program()
 
 sys.stdout.write(buf.getvalue())
