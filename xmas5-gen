@@ -4,7 +4,7 @@ from StringIO import StringIO
 
 buf = StringIO()
 
-def tobin(x):
+def push_number(x):
     # push number
     buf.write("  ")
     # positive sign
@@ -18,13 +18,18 @@ def tobin(x):
             buf.write("\t")
     # end parameter
     buf.write("\n")
+
+def print_top_of_stack():
     # print top of stack
     buf.write("\t\n  ")
 
+def end_program():
+    buf.write("\n\n\n")
+
 with file("full-lyrics.txt") as f:
     for c in f.read():
-        tobin(ord(c))
-
-buf.write("\n\n\n")
+        push_number(ord(c))
+        print_top_of_stack()
+    end_program()
 
 sys.stdout.write(buf.getvalue())
