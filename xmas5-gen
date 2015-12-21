@@ -9,7 +9,7 @@ def tobin(x):
     buf.write("  ")
     # positive sign
     buf.write(" ")
-    for c in bin(x)[2:].zfill(8):
+    for c in bin(x)[2:].zfill(8).lstrip("0"):
         if c == "0":
             # zero
             buf.write(" ")
