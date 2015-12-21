@@ -51,17 +51,22 @@ def jump_if_zero(label):
 def jump_if_negative(label):
     buf.write("\n\t\t%s\n" % label)
 
+def ret():
+    buf.write("\n\t\n")
+
 def end_program():
     buf.write("\n\n\n")
 
 with file("full-lyrics.txt") as f:
     data = f.read()
     for c in reversed(data):
-        push_number(ord(c))
+        push_number(ord(c)-ord("A"))
     push_number(len(data))
 
     label(" ")
     swap_top_of_stack()
+    push_number(ord("A"))
+    addition()
     print_top_of_stack()
     push_number(1)
     subtraction()
