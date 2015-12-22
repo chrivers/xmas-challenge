@@ -1,0 +1,35 @@
+  push 1
+  call headline
+  push 0
+  call partridge
+  push 10
+  write
+
+  ; start from 2
+  push 2
+
+_main_start:
+
+  dup
+  call headline
+
+  call part0
+  dup 
+  call partridge
+
+  push 10
+  write
+  ; increment
+  push 1
+  add
+  dup
+  ; are we at 13 yet?
+  push 13
+  sub
+  ; if so, abort
+  jmpz _main_end
+  ; if not, continue
+  jmp _main_start
+
+_main_end:
+  halt
