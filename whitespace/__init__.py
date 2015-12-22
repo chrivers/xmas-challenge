@@ -2,10 +2,10 @@ import re
 from StringIO import StringIO
 
 re_comment = re.compile("\s*;.*")
-re_push    = re.compile("\s*(PUSH)\s+(\d+)\s*")
+re_push    = re.compile("\s*(push)\s+(\d+)\s*")
 re_label   = re.compile("\s*([a-z0-9_]+:)\s*")
-re_op      = re.compile("\s*([A-Z]+)\s*")
-re_lop     = re.compile("\s*([A-Z]+)\s+([a-z0-9_]+)\s*")
+re_op      = re.compile("\s*([A-Za-z]+)\s*")
+re_lop     = re.compile("\s*([A-Za-z]+)\s+([a-z0-9_]+)\s*")
 
 class WhitespaceAssemblerParser(object):
 
@@ -19,7 +19,9 @@ class WhitespaceAssemblerParser(object):
                 continue
             for regex in [re_comment, re_push, re_label, re_lop, re_op]:
                 match = regex.match(line)
-                if match:
+                if match and regex == re_comment:
+                    break
+                elif match:
                     result.append(match.groups())
                     break
             else:
@@ -36,7 +38,7 @@ class WhitespaceAssembler(object):
         self.reset()
 
     def reset(self):
-        self.label_counter = 0
+        self.labels = dict()
         self.buf = StringIO()
 
     def get_result(self):
@@ -52,13 +54,15 @@ class WhitespaceAssembler(object):
                     labels[label] = 0
                 labels[label] += 1
         for label in labels:
-            labelname = self.alloc_label()
+            labelname = self.labelref(label)
             labels[label] = labelname
         return labels
 
-    def alloc_label(self):
-        self.label_counter += 1
-        return bin(self.label_counter)[2:].replace("1", "\t").replace("0", " ")
+    def labelref(self, name):
+        if not name in self.labels:
+            label = bin(len(self.labels))[2:].replace("1", "\t").replace("0", " ")
+            self.labels[name] = label
+        return self.labels[name]
 
     def assemble(self, tokens):
         labels = self._alloc_labels(tokens)
@@ -79,14 +83,13 @@ class WhitespaceAssembler(object):
                 if hasattr(self, name):
                     if not labelname in labels:
                         raise ValueError("Unknown label [%s] in [%s %s]" % (labelname, token[0], token[1]))
-                    getattr(self, name)(labels[labelname])
+                    getattr(self, name)(labelname)
                 else:
                     raise ValueError("Unknown operation %s %s!" % (name, tokens[1]))
             elif name == "push":
                 self.push(int(token[1]))
             elif name[-1] == ":":
-                print repr(labels), labelname
-                self.label(labels[labelname])
+                self.label(labelname)
             else:
                 raise ValueError("Unknown operation %s!" % name)
 
@@ -97,7 +100,7 @@ class WhitespaceAssembler(object):
         buf.write("  ")
         # positive sign
         buf.write(" ")
-        for c in bin(x)[2:].zfill(8).lstrip("0"):
+        for c in bin(x)[2:].lstrip("0"):
             if c == "0":
                 # zero
                 buf.write(" ")
@@ -141,19 +144,19 @@ class WhitespaceAssembler(object):
 
     # Flow control
     def label(self, label):
-        self.buf.write("\n  %s\n" % label)
+        self.buf.write("\n  %s\n" % self.labelref(label))
 
     def call(self, label):
-        self.buf.write("\n \t%s\n" % label)
+        self.buf.write("\n \t%s\n" % self.labelref(label))
 
     def jump(self, label):
-        self.buf.write("\n \n%s\n" % label)
+        self.buf.write("\n \n%s\n" % self.labelref(label))
 
     def jumpz(self, label):
-        self.buf.write("\n\t %s\n" % label)
+        self.buf.write("\n\t %s\n" % self.labelref(label))
 
     def jumpn(self, label):
-        self.buf.write("\n\t\t%s\n" % label)
+        self.buf.write("\n\t\t%s\n" % self.labelref(label))
 
     def ret(self):
         self.buf.write("\n\t\n")
