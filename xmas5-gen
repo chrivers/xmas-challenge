@@ -39,8 +39,11 @@ def duplicate_top_of_stack():
     buf.write(" \n ")
 
 # flow control
-def label(x):
-    buf.write("\n  %s\n" % x)
+def label(label):
+    buf.write("\n  %s\n" % label)
+
+def call(label):
+    buf.write("\n \t%s\n" % label)
 
 def jump(label):
     buf.write("\n \n%s\n" % label)
@@ -57,13 +60,17 @@ def ret():
 def end_program():
     buf.write("\n\n\n")
 
-with file("full-lyrics.txt") as f:
-    data = f.read()
-    for c in reversed(data):
-        push_number(ord(c)-ord("A"))
-    push_number(len(data))
+label_counter = 0
+def new_label():
+    global label_counter
+    label_counter += 1
+    label = bin(label_counter)[2:].replace("1", "\t").replace("0", " ")
+    return label
 
-    label(" ")
+def _write_buffer(lab):
+    l_end = new_label()
+
+    label(lab)
     swap_top_of_stack()
     push_number(ord("A"))
     addition()
@@ -72,9 +79,20 @@ with file("full-lyrics.txt") as f:
     subtraction()
     duplicate_top_of_stack()
 
-    jump_if_zero("  ")
-    jump(" ")
-    label("  ")
+    jump_if_zero(l_end)
+    jump(lab)
+    label(l_end)
+    ret()
+
+with file("full-lyrics.txt") as f:
+    data = f.read()
+    for c in reversed(data):
+        push_number(ord(c)-ord("A"))
+
+    l_write_buffer = new_label()
+    push_number(len(data))
+    call(l_write_buffer)
     end_program()
+    _write_buffer(l_write_buffer)
 
 sys.stdout.write(buf.getvalue())
