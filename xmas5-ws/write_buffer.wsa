@@ -7,8 +7,8 @@ write_buffer:
   sub
   dup
 
-  jumpz write_buffer_end
-  jump write_buffer
+  jmpz write_buffer_end
+  jmp write_buffer
 
 write_buffer_end:
   pop
