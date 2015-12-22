@@ -33,11 +33,43 @@ class WhitespaceAssembler(object):
 
     def __init__(self):
         super(WhitespaceAssembler, self).__init__()
+        self.reset()
+
+    def reset(self):
+        self.label_counter = 0
         self.buf = StringIO()
 
-    def assemble(self, tokens):
+    def get_result(self):
+        return self.buf.getvalue()
+
+    def _alloc_labels(self, tokens):
+        labels = {}
         for token in tokens:
             name = token[0].lower()
+            if name[-1] == ":":
+                label = name[:-1]
+                if not label in labels:
+                    labels[label] = 0
+                labels[label] += 1
+        for label in labels:
+            labelname = self.alloc_label()
+            labels[label] = labelname
+        return labels
+
+    def alloc_label(self):
+        self.label_counter += 1
+        return bin(self.label_counter)[2:].replace("1", "\t").replace("0", " ")
+
+    def assemble(self, tokens):
+        labels = self._alloc_labels(tokens)
+        for token in tokens:
+            name = token[0].lower()
+            if len(token) > 1:
+                labelname = token[1].lower()
+            elif name[-1] == ":":
+                labelname = name[:-1]
+            else:
+                labelname = None
             if name in self.TOKENS_1OP:
                 if hasattr(self, name):
                     getattr(self, name)()
@@ -45,13 +77,16 @@ class WhitespaceAssembler(object):
                     raise ValueError("Unknown operation %s!" % name)
             elif name in self.TOKENS_2OP:
                 if hasattr(self, name):
-                    getattr(self, name)(tokens[1])
+                    if not labelname in labels:
+                        raise ValueError("Unknown label [%s] in [%s %s]" % (labelname, token[0], token[1]))
+                    getattr(self, name)(labels[labelname])
                 else:
                     raise ValueError("Unknown operation %s %s!" % (name, tokens[1]))
             elif name == "push":
                 self.push(int(token[1]))
             elif name[-1] == ":":
-                self.label(name[:-1])
+                print repr(labels), labelname
+                self.label(labels[labelname])
             else:
                 raise ValueError("Unknown operation %s!" % name)
 
@@ -105,6 +140,8 @@ class WhitespaceAssembler(object):
         self.buf.write("\t\t\t")
 
     # Flow control
+    def label(self, label):
+        self.buf.write("\n  %s\n" % label)
 
     def call(self, label):
         self.buf.write("\n \t%s\n" % label)
@@ -124,10 +161,22 @@ class WhitespaceAssembler(object):
     def halt(self):
         self.buf.write("\n\n\n")
 
-    # io
+    # input/output
     def write(self):
-        # print top of stack
+        # print top of stack as char
         self.buf.write("\t\n  ")
+
+    def output(self):
+        # print top of stack as number
+        self.buf.write("\t\n \t")
+
+    def read(self):
+        # read to the top of stack pointer as char
+        self.buf.write("\t\n\t ")
+
+    def input(self):
+        # read to the top of stack pointer as number
+        self.buf.write("\t\n\t\t")
 
 if __name__ == "__main__":
     import sys
