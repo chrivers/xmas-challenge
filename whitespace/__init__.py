@@ -44,20 +44,6 @@ class WhitespaceAssembler(object):
     def get_result(self):
         return self.buf.getvalue()
 
-    def _alloc_labels(self, tokens):
-        labels = {}
-        for token in tokens:
-            name = token[0].lower()
-            if name[-1] == ":":
-                label = name[:-1]
-                if not label in labels:
-                    labels[label] = 0
-                labels[label] += 1
-        for label in labels:
-            labelname = self.labelref(label)
-            labels[label] = labelname
-        return labels
-
     def labelref(self, name):
         if not name in self.labels:
             label = bin(len(self.labels))[2:].replace("1", "\t").replace("0", " ")
@@ -65,7 +51,6 @@ class WhitespaceAssembler(object):
         return self.labels[name]
 
     def assemble(self, tokens):
-        labels = self._alloc_labels(tokens)
         for token in tokens:
             name = token[0].lower()
             if len(token) > 1:
@@ -81,8 +66,6 @@ class WhitespaceAssembler(object):
                     raise ValueError("Unknown operation %s!" % name)
             elif name in self.TOKENS_2OP:
                 if hasattr(self, name):
-                    if not labelname in labels:
-                        raise ValueError("Unknown label [%s] in [%s %s]" % (labelname, token[0], token[1]))
                     getattr(self, name)(labelname)
                 else:
                     raise ValueError("Unknown operation %s %s!" % (name, tokens[1]))
