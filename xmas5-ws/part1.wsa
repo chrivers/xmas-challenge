@@ -1,0 +1,18 @@
+part1:
+  ; push "On the "
+  push -33
+  push 36
+  push 39
+  push 51
+  push -33
+  push 45
+  push 14
+
+  push 7
+  call write_buffer
+
+  dup
+  output
+
+  write
+  ret

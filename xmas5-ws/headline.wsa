@@ -1,0 +1,59 @@
+headline:
+  ; push "On the "
+  push -65
+  push 4
+  push 7
+  push 19
+  push -65
+  push 13
+  push -18
+
+  push 7
+  call write_buffer
+
+  dup
+  output
+
+_st:
+  push 't'
+  push 's'
+  jump headline_end
+_nd:
+  push 'd'
+  push 'n'
+
+  jump headline_end
+_rd:
+  push 'd'
+  push 'r'
+
+  jump headline_end
+_th:
+  push 'h'
+  push 't'
+  
+headline_end:
+  write
+  write
+
+  push 18
+  push 0
+  push 12
+  push 19
+  push 18
+  push 8
+  push 17
+  push 7
+  push -30
+  push -65
+  push 5
+  push 14
+  push -65
+  push 24
+  push 0
+  push 3
+  push -65
+
+  push 17
+  call write_buffer
+  ret

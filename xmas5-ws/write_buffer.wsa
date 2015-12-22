@@ -1,0 +1,15 @@
+write_buffer:
+  swap
+  push 'a'
+  add
+  write
+  push 1
+  sub
+  dup
+
+  jumpz write_buffer_end
+  jump write_buffer
+
+write_buffer_end:
+  pop
+  ret
