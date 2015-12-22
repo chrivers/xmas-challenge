@@ -98,9 +98,13 @@ class WhitespaceAssembler(object):
         buf = self.buf
         # push number
         buf.write("  ")
-        # positive sign
-        buf.write(" ")
-        for c in bin(x)[2:].lstrip("0"):
+        if x > 0:
+            # positive sign
+            buf.write(" ")
+        else:
+            # negative sign
+            buf.write("\t")
+        for c in bin(abs(x))[2:].lstrip("0"):
             if c == "0":
                 # zero
                 buf.write(" ")
