@@ -31,7 +31,7 @@ class WhitespaceAssemblerParser(object):
 class WhitespaceAssembler(object):
 
     TOKENS_1OP = ["dup", "swap", "pop", "add", "sub", "mul", "div", "mod", "get", "set", "ret", "halt", "write", "output", "read", "input"]
-    TOKENS_2OP = ["call", "jump", "jumpz", "jumpn"]
+    TOKENS_2OP = ["call", "jmp", "jmpz", "jmpn"]
 
     def __init__(self):
         super(WhitespaceAssembler, self).__init__()
@@ -145,13 +145,13 @@ class WhitespaceAssembler(object):
     def call(self, label):
         self.buf.write("\n \t%s\n" % self.labelref(label))
 
-    def jump(self, label):
+    def jmp(self, label):
         self.buf.write("\n \n%s\n" % self.labelref(label))
 
-    def jumpz(self, label):
+    def jmpz(self, label):
         self.buf.write("\n\t %s\n" % self.labelref(label))
 
-    def jumpn(self, label):
+    def jmpn(self, label):
         self.buf.write("\n\t\t%s\n" % self.labelref(label))
 
     def ret(self):
