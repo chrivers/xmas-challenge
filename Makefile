@@ -10,6 +10,7 @@ run:
 	@python xmas4 > 4.out
 	@./whitespace.pl xmas5 > 5.out
 	@zsh xmas6 > 6.out
+	@zsh xmas7 > 7.out 2> /dev/null || true
 
 sizes:
 	@./size.py xmas1
@@ -18,6 +19,7 @@ sizes:
 	@./size.py xmas4
 	@./size.py xmas5
 	@./size.py xmas6
+	@./size.py xmas7
 
 compare: run
 	@diff -Bqw 1.out full-lyrics.txt && echo "xmas1 matches"
@@ -26,3 +28,4 @@ compare: run
 	@diff -Bqw 4.out full-lyrics.txt && echo "xmas4 matches"
 	@diff -Bqw 5.out full-lyrics.txt && echo "xmas5 matches"
 	@diff -Bqw 6.out full-lyrics.txt && echo "xmas6 matches"
+	@diff -Bqw 7.out full-lyrics.txt && echo "xmas7 matches"
