@@ -2,7 +2,7 @@ import re
 from StringIO import StringIO
 
 re_comment = re.compile("\s*;.*")
-re_push    = re.compile("\s*(push)\s+(\d+)\s*")
+re_push    = re.compile("\s*(push)\s+(-?\d+|'.')\s*")
 re_label   = re.compile("\s*([a-z0-9_]+:)\s*")
 re_op      = re.compile("\s*([A-Za-z]+)\s*")
 re_lop     = re.compile("\s*([A-Za-z]+)\s+([a-z0-9_]+)\s*")
@@ -70,7 +70,11 @@ class WhitespaceAssembler(object):
                 else:
                     raise ValueError("Unknown operation %s %s!" % (name, tokens[1]))
             elif name == "push":
-                self.push(int(token[1]))
+                if token[1][0] == "'" and len(token[1]) == 3:
+                    val = ord(token[1][1])
+                else:
+                    val = int(token[1])
+                self.push(val)
             elif name[-1] == ":":
                 self.label(labelname)
             else:
