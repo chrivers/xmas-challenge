@@ -73,6 +73,6 @@ HALT
 # [Tab][Tab]	-	Read a number and place it in the location given by the top of the stack
 
 WRITE
-OUT
+OUTPUT
 READ
-IN
+INPUT
