@@ -49,11 +49,85 @@ class WhitespaceAssembler(object):
                 else:
                     raise ValueError("Unknown operation %s %s!" % (name, tokens[1]))
             elif name == "push":
-                self.push(tokens[1])
+                self.push(int(token[1]))
             elif name[-1] == ":":
                 self.label(name[:-1])
             else:
                 raise ValueError("Unknown operation %s!" % name)
+
+    # Stack manipulation
+    def push(self, x):
+        buf = self.buf
+        # push number
+        buf.write("  ")
+        # positive sign
+        buf.write(" ")
+        for c in bin(x)[2:].zfill(8).lstrip("0"):
+            if c == "0":
+                # zero
+                buf.write(" ")
+            else:
+                # one
+                buf.write("\t")
+        # end parameter
+        buf.write("\n")
+
+    def dup(self):
+        self.buf.write(" \n ")
+
+    def swap(self):
+        self.buf.write(" \n\t")
+
+    def pop(self):
+        self.buf.write(" \n\n")
+
+    # Arithmetic
+    def add(self):
+        self.buf.write("\t   ")
+
+    def sub(self):
+        self.buf.write("\t  \t")
+
+    def mul(self):
+        self.buf.write("\t  \n")
+
+    def div(self):
+        self.buf.write("\t \t ")
+
+    def mod(self):
+        self.buf.write("\t \t\t")
+
+    # Heap
+    def set(self):
+        self.buf.write("\t\t ")
+
+    def get(self):
+        self.buf.write("\t\t\t")
+
+    # Flow control
+
+    def call(self, label):
+        self.buf.write("\n \t%s\n" % label)
+
+    def jump(self, label):
+        self.buf.write("\n \n%s\n" % label)
+
+    def jumpz(self, label):
+        self.buf.write("\n\t %s\n" % label)
+
+    def jumpn(self, label):
+        self.buf.write("\n\t\t%s\n" % label)
+
+    def ret(self):
+        self.buf.write("\n\t\n")
+
+    def halt(self):
+        self.buf.write("\n\n\n")
+
+    # io
+    def write(self):
+        # print top of stack
+        self.buf.write("\t\n  ")
 
 if __name__ == "__main__":
     import sys
