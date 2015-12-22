@@ -76,6 +76,11 @@ class WhitespaceAssembler(object):
             else:
                 raise ValueError("Unknown operation %s!" % name)
 
+    def load_library(self, filename):
+        parser = WhitespaceAssemblerParser()
+        source = file(filename).read()
+        self.assemble(parser.parse(source))
+
     # Stack manipulation
     def push(self, x):
         buf = self.buf
