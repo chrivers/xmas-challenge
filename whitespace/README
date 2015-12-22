@@ -36,8 +36,8 @@ MOD
 # [Space]	-	Store
 # [Tab]	-	Retrieve
 
-GET
 SET
+GET
 
 # Flow Control (IMP: [LF])
 # Flow control operations are also common. Subroutines are marked by
