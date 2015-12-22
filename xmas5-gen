@@ -1,98 +1,20 @@
 #!/usr/bin/python
 import sys
 from StringIO import StringIO
+from whitespace import WhitespaceAssemblerParser, WhitespaceAssembler
 
-buf = StringIO()
-
-def push_number(x):
-    # push number
-    buf.write("  ")
-    # positive sign
-    buf.write(" ")
-    for c in bin(x)[2:].zfill(8).lstrip("0"):
-        if c == "0":
-            # zero
-            buf.write(" ")
-        else:
-            # one
-            buf.write("\t")
-    # end parameter
-    buf.write("\n")
-
-def print_top_of_stack():
-    # print top of stack
-    buf.write("\t\n  ")
-
-def pop():
-    buf.write(" \n\n")
-
-def addition():
-    buf.write("\t   ")
-
-def subtraction():
-    buf.write("\t  \t")
-
-def swap_top_of_stack():
-    buf.write(" \n\t")
-
-def duplicate_top_of_stack():
-    buf.write(" \n ")
-
-# flow control
-def label(label):
-    buf.write("\n  %s\n" % label)
-
-def call(label):
-    buf.write("\n \t%s\n" % label)
-
-def jump(label):
-    buf.write("\n \n%s\n" % label)
-
-def jump_if_zero(label):
-    buf.write("\n\t %s\n" % label)
-
-def jump_if_negative(label):
-    buf.write("\n\t\t%s\n" % label)
-
-def ret():
-    buf.write("\n\t\n")
-
-def end_program():
-    buf.write("\n\n\n")
-
-label_counter = 0
-def new_label():
-    global label_counter
-    label_counter += 1
-    label = bin(label_counter)[2:].replace("1", "\t").replace("0", " ")
-    return label
-
-def _write_buffer(lab):
-    l_end = new_label()
-
-    label(lab)
-    swap_top_of_stack()
-    push_number(ord("A"))
-    addition()
-    print_top_of_stack()
-    push_number(1)
-    subtraction()
-    duplicate_top_of_stack()
-
-    jump_if_zero(l_end)
-    jump(lab)
-    label(l_end)
-    ret()
+parser = WhitespaceAssemblerParser()
+asm = WhitespaceAssembler()
 
 with file("full-lyrics.txt") as f:
     data = f.read()
     for c in reversed(data):
-        push_number(ord(c)-ord("A"))
+        asm.push(ord(c)-ord("A"))
 
-    l_write_buffer = new_label()
-    push_number(len(data))
-    call(l_write_buffer)
-    end_program()
-    _write_buffer(l_write_buffer)
+    asm.push(len(data))
+    asm.call("write_buffer")
+    asm.halt()
+    lib = file("xmas5-ws/write_buffer.wsa").read()
+    asm.assemble(parser.parse(lib))
 
-sys.stdout.write(buf.getvalue())
+sys.stdout.write(asm.get_result())
