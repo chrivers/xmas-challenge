@@ -14,24 +14,39 @@ headline:
   dup
   output
 
+  push 1
+  sub
+  dup
+  jmpz _st
+  push 1
+  sub
+  dup
+  jmpz _nd
+  push 1
+  sub
+  dup
+  jmpz _rd
+  pop
+  jmp _th
+
 _st:
   push 't'
   push 's'
-  jump headline_end
+  jmp headline_end
 _nd:
   push 'd'
   push 'n'
 
-  jump headline_end
+  jmp headline_end
 _rd:
   push 'd'
   push 'r'
 
-  jump headline_end
+  jmp headline_end
 _th:
   push 'h'
   push 't'
-  
+
 headline_end:
   write
   write
