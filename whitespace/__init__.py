@@ -30,7 +30,7 @@ class WhitespaceAssemblerParser(object):
 
 class WhitespaceAssembler(object):
 
-    TOKENS_1OP = ["dup", "swap", "pop", "add", "sub", "mul", "div", "mod", "get", "set", "ret", "halt", "write", "out", "read", "in"]
+    TOKENS_1OP = ["dup", "swap", "pop", "add", "sub", "mul", "div", "mod", "get", "set", "ret", "halt", "write", "output", "read", "input"]
     TOKENS_2OP = ["call", "jump", "jumpz", "jumpn"]
 
     def __init__(self):
