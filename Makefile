@@ -1,7 +1,7 @@
 SHELL=zsh
 
 clean:
-	rm -fv **/*~ ?.out(N)
+	rm -fv **/*~(N) ?.out(N)
 
 run:
 	@python xmas1 > 1.out
