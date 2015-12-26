@@ -114,4 +114,4 @@ size" category. Since we are dealing with a shell script that decodes
 gzip data, I was wondering if maybe there wasn't some padding data at
 the end of the gzip data stream. It turns out there is! And luckily,
 this particular stream is still decompressible if you shave a few
-bytes off. So xmas7 is just xmas3 without the last few bytes end.
+bytes off. So xmas7 is just xmas3 without the last few bytes at the end.
