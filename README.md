@@ -69,7 +69,7 @@ entirely of whitespace" category was added, and this is my
 contribution to that.
 
 The trivial implementation in whitespace will simply push each
-character to the stack, then print it. However, this takes about 36kb,
+character to the stack, then print it. However, this takes about 43kb,
 which is clearly not ideal. So to be competitive, I implemented my own
 whitespace assembler (since whitespace is really a machine language,
 not a programming language). With it, I was able to create a
