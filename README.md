@@ -28,7 +28,7 @@ There are 3 categories, and this is my attempt at winning each of those:
 ## xmas1
 
 This is a pure-python implementation that originally wasn't very
-small. This is what lead me to persue the other implementations. Since
+small. This is what lead me to pursue the other implementations. Since
 then, it has been much improved. I would be surprised if a
 significantly smaller honest python solution exists.
 
