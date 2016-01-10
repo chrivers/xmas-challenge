@@ -31,7 +31,7 @@ for index, line in enumerate(lines):
     for char in reversed(line):
         asm.push(ord(char) - best)
     asm.push(len(line) + 1)
-    asm.push(best)
+    asm.push(best - xmas5py.BASE_OFFSET)
     asm.call("write_buffer")
     asm.ret()
 

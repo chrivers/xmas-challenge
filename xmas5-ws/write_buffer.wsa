@@ -1,6 +1,8 @@
 write_buffer:
   push 0
   swap
+  push 104
+  add
   set
 
 write_buffer_loop:

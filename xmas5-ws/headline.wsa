@@ -9,7 +9,7 @@ headline:
   push -25
 
   push 7
-  push 104
+  push 0
   call write_buffer
 
   ; write counter
@@ -85,7 +85,7 @@ headline_end:
   push -83
 
   push 18
-  push 115
+  push 11
   call write_buffer
 
   ret
