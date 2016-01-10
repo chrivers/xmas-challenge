@@ -1,3 +1,4 @@
+BASE_OFFSET = 104
 
 def number_bit_length(number):
     return len(bin(abs(number))[2:].lstrip("0"))
