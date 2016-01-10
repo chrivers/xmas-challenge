@@ -10,7 +10,9 @@ partridge:
   push 0
 
   push 6
+  push 97
   call write_buffer
+
   jmp _partridge_common
 
 _partridge_single:
@@ -21,32 +23,34 @@ _partridge_single:
 
 _partridge_common:
   ; "Partridge in a Pear Tree"
-  push -87
-  push 4
-  push 4
-  push 17
-  push -13
-  push -65
-  push 17
+  push -91
   push 0
-  push 4
-  push -17
-  push -65
   push 0
-  push -65
   push 13
-  push 8
-  push -65
-  push 4
-  push 6
-  push 3
-  push 8
-  push 17
-  push 19
-  push 17
-  push 0
   push -17
+  push -69
+  push 13
+  push -4
+  push 0
+  push -21
+  push -69
+  push -4
+  push -69
+  push 9
+  push 4
+  push -69
+  push 0
+  push 2
+  push -1
+  push 4
+  push 13
+  push 15
+  push 13
+  push -4
+  push -21
 
   push 25
+  push 101
   call write_buffer
+
   ret

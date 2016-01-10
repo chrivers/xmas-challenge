@@ -1,6 +1,13 @@
 write_buffer:
+  push 0
   swap
-  push 'a'
+  set
+
+write_buffer_loop:
+  swap
+  push 0
+  get
+
   add
   write
   push 1
@@ -8,7 +15,7 @@ write_buffer:
   dup
 
   jmpz write_buffer_end
-  jmp write_buffer
+  jmp write_buffer_loop
 
 write_buffer_end:
   pop

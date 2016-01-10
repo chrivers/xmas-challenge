@@ -21,14 +21,32 @@ lines = [
     "12 Drummers Drumming",
 ]
 
+def total_bit_width(string, offset):
+    bits = 0
+    for c in string:
+        bits += len(bin(abs(ord(c) - offset))[2:].lstrip("0"))
+    return bits
+
+def best_offset(string):
+    best = 0xFFFFFFFF
+    index = None
+    for x in range(0, 256):
+        new = total_bit_width(string, x)
+        if new < best:
+            best = new
+            index = x
+    return index
+
 asm.load_library("xmas5-ws/main.wsa")
 
 for index, line in enumerate(lines):
+    best = best_offset(line)
     asm.label("part%d" % (index+1))
-    asm.push(ord('\n') - ord('a'))
+    asm.push(ord('\n') - best)
     for char in reversed(line):
-        asm.push(ord(char) - ord('a'))
+        asm.push(ord(char) - best)
     asm.push(len(line)+1)
+    asm.push(best_offset(line))
     asm.call("write_buffer")
     asm.ret()
 
