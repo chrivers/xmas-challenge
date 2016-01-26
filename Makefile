@@ -11,6 +11,7 @@ run:
 	@./whitespace.pl xmas5 > 5.out
 	@zsh xmas6 > 6.out
 	@zsh xmas7 > 7.out 2> /dev/null || true
+	@perl xmas8 > 8.out 2> /dev/null || true
 
 sizes:
 	@./size.py xmas1
@@ -30,3 +31,4 @@ compare: run
 	@diff -Bqw 5.out full-lyrics.txt && echo "xmas5 matches"
 	@diff -Bqw 6.out full-lyrics.txt && echo "xmas6 matches"
 	@diff -Bqw 7.out full-lyrics.txt && echo "xmas7 matches"
+	@diff -Bqw 8.out full-lyrics.txt && echo "xmas8 matches"
