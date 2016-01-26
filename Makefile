@@ -20,6 +20,7 @@ sizes:
 	@./size.py xmas5
 	@./size.py xmas6
 	@./size.py xmas7
+	@./size.py xmas8
 
 compare: run
 	@diff -Bqw 1.out full-lyrics.txt && echo "xmas1 matches"
