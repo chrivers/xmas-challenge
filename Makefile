@@ -12,6 +12,7 @@ run:
 	@zsh xmas6 > 6.out
 	@zsh xmas7 > 7.out 2> /dev/null || true
 	@perl xmas8 > 8.out 2> /dev/null || true
+	@java -jar cjam-0.6.5.jar xmas9 > 9.out 2> /dev/null || true
 
 sizes:
 	@./size.py xmas1
@@ -22,6 +23,7 @@ sizes:
 	@./size.py xmas6
 	@./size.py xmas7
 	@./size.py xmas8
+	@./size.py xmas9
 
 compare: run
 	@diff -Bqw 1.out full-lyrics.txt && echo "xmas1 matches"
@@ -32,3 +34,4 @@ compare: run
 	@diff -Bqw 6.out full-lyrics.txt && echo "xmas6 matches"
 	@diff -Bqw 7.out full-lyrics.txt && echo "xmas7 matches"
 	@diff -Bqw 8.out full-lyrics.txt && echo "xmas8 matches"
+	@diff -Bqw 9.out full-lyrics.txt && echo "xmas9 matches"
