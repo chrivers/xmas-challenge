@@ -97,6 +97,10 @@ To further bring the size down, I employ a number of tricks:
  - A main routine is implemented, using a hand-written loop over the
    various parts, meaning redundancy is kept to an absolute minimum.
 
+ - Implemented double mean-offset-encoding for the character
+   literals. This saved a good number of bits in the numbers,
+   corresponding to an equal number of bytes saved in the output.
+
 ## xmas6
 
 The xmas4 solution was clearly a step in the right direction. I'm
