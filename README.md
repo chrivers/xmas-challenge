@@ -115,3 +115,38 @@ gzip data, I was wondering if maybe there wasn't some padding data at
 the end of the gzip data stream. It turns out there is! And luckily,
 this particular stream is still decompressible if you shave a few
 bytes off. So xmas7 is just xmas3 without the last few bytes at the end.
+
+## xmas8
+
+In the "whitespace does not count" category, the trick is clearly to
+pack as much information as possible into a whitespace encoding, and
+white the simplest (smallest) possible decoder to extract it. I
+noticed that perl has some very compact operators, so I re-implemented
+xmas6 in perl, getting the size down to 24 bytes. Along the way I
+discovered that perl's binary unpacking only cares about 1's. If you
+use space for zeroes, it still works fine (which is bordering on
+absurd). This saved another byte.
+
+## xmas9
+
+When writing the smallest possible decoder, it obviously helps to use
+a language designed to be as compact as possible. Here's my entry of
+the same idea again, but this time in CJam, a code golf language
+designed for extreme compactness. This got the size down to 9 bytes!
+
+## xmas10
+
+Finally, after making xmas9, I scoured the net for other esoteric golf
+langauges that would allow me to write things even more compactly. I
+found "gs2", which is a pythyn-based extremely compact stack-based
+golfing language. It's wonderfully bizarre - it even has multiple
+kinds of end quotes! With this, I managed to bring the size down to
+just 5 bytes.
+
+If we assume that a string needs to be quoted (or otherwise have
+beginning and end marked), and that we need at least 1 operation to go
+from whitespace encoding to ascii, this brings the reasonable
+theoretical minimum size to 3 bytes. And that requires that the
+language more or less contains a "convert from whitespace encoding to
+ascii and print the result" operator. I'm quite satisfied with this
+result.
